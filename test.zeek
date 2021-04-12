@@ -2,8 +2,8 @@
 event zeek_init()
     {
     local r1 = SumStats::Reducer($stream="res.all",$apply=set(SumStats::SUM));
-	local r2 = SumStats::Reducer($stream="res.404",$apply=set(SumStats::SUM));
-	local r3 = SumStats::Reducer($stream="uni.url.404",$apply=set(SumStats::UNIQUE));
+    local r2 = SumStats::Reducer($stream="res.404",$apply=set(SumStats::SUM));
+    local r3 = SumStats::Reducer($stream="uni.url.404",$apply=set(SumStats::UNIQUE));
     SumStats::create([$name="scan",
                       $epoch=10mins,
                       $reducers=set(r1,r2,r3),
@@ -31,3 +31,6 @@ event http_reply(c: connection, version: string, code: count, reason: string)
     	SumStats::observe("uni.url.404", [$host=c$id$orig_h], [$str=c$http$uri]);
     }
     }
+event zeek_done()
+{
+}
