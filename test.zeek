@@ -24,13 +24,9 @@ event zeek_init()
 
 event http_reply(c: connection, version: string, code: count, reason: string)
     {
-    SumStats::observe("res.all", [$host=c$id$orig_h], []);
+    SumStats::observe("res.all", SumStats::Key($host=c$id$orig_h), SumStats::Observation());
     if ( code == 404 )
     {
-    	SumStats::observe("res.404", [$host=c$id$orig_h], []);
-    	SumStats::observe("uni.url.404", [$host=c$id$orig_h], [$str=c$http$uri]);
+    	SumStats::observe("res.404", SumStats::Key($host=c$id$orig_h), SumStats::Observation());
+    	SumStats::observe("uni.url.404", SumStats::Key($host=c$id$orig_h), SumStats::Observation($str=c$http$uri));
     }
-    }
-event zeek_done()
-{
-}
