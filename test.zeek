@@ -30,3 +30,4 @@ event http_reply(c: connection, version: string, code: count, reason: string)
     	SumStats::observe("res.404", SumStats::Key($host=c$id$orig_h), SumStats::Observation());
     	SumStats::observe("uni.url.404", SumStats::Key($host=c$id$orig_h), SumStats::Observation($str=c$http$uri));
     }
+    }
